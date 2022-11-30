@@ -2,7 +2,7 @@
 ; (defvar *aoc-day*) (setf *aoc-day* "template")
 (if (not (and (boundp '*load-truename*) (boundp '*common-loaded*)
               (not (equal nil *load-truename*)) (equal t *common-loaded*)))
-  (if (not (ignore-errors (load "common.lisp")))
+  (if (not (load "common.lisp" :if-does-not-exist nil))
     (load "../common.lisp"))
   (format t "common already loaded~%"))
 

@@ -2,7 +2,7 @@
 
 (format t "-------------------------- loading common~%")
 (if (not (boundp '*common-loaded*))
-  (if (not (ignore-errors (load "common.lisp")))
+  (if (not (load "common.lisp" :if-does-not-exist nil))
     (load "../common.lisp")))
 
 (defun cmd-args ()
@@ -15,20 +15,19 @@
 
 (defvar *aoc-day*)
 (defun run-day (day)
-  (format t "-------------------------- running ~A~%" day)
   (setf *aoc-day* (if (every #'digit-char-p day)
                     (format nil "~2,'0d" (parse-integer day))
                     day))
-  (handler-case
-    (progn
-      (load (format nil "~A/solution.lisp" *aoc-day*))
-      (day-main))
-    (sb-int:simple-file-error (c) (format nil "~A~%" c))))
+  (format t "-------------------------- running ~a~%" *aoc-day*)
+  (if (load (format nil "~A/solution.lisp" *aoc-day*) :if-does-not-exist nil)
+    (day-main)
+    (format t "Solution for ~a not found~%" *aoc-day*)))
 
-(cond
-  ((equal "all" (nth 1 (cmd-args)))
-   (format t "lol"))
-  ((equal "template" (nth 1 (cmd-args)))
-   (run-day (nth 1 (cmd-args))))
-  ((every #'digit-char-p (nth 1 (cmd-args)))
-   (run-day (nth 1 (cmd-args)))))
+(when (equal (length (cmd-args)) 2)
+  (cond
+    ((equal "all" (nth 1 (cmd-args)))
+     (format t "lol~%"))
+    ((equal "template" (nth 1 (cmd-args)))
+     (run-day (nth 1 (cmd-args))))
+    ((every #'digit-char-p (nth 1 (cmd-args)))
+     (run-day (nth 1 (cmd-args))))))
