@@ -19,14 +19,16 @@
                     (format nil "~2,'0d" (parse-integer day))
                     day))
   (format t "-------------------------- running ~a~%" *aoc-day*)
-  (if (load (format nil "~A/solution.lisp" *aoc-day*) :if-does-not-exist nil)
-    (day-main)
+  (if (load (format nil "~a/solution.lisp" *aoc-day*) :if-does-not-exist nil)
+    (time (day-main))
     (format t "Solution for ~a not found~%" *aoc-day*)))
 
 (when (equal (length (cmd-args)) 2)
   (cond
     ((equal "all" (nth 1 (cmd-args)))
-     (format t "lol~%"))
+     (loop for d from 1 to 25
+           collect
+           (run-day (format nil "~d" d))))
     ((equal "template" (nth 1 (cmd-args)))
      (run-day (nth 1 (cmd-args))))
     ((every #'digit-char-p (nth 1 (cmd-args)))

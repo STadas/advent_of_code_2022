@@ -33,6 +33,5 @@
                             line))))
 
 (defun day-main ()
-  (format t "-------------------------- answers~%")
   (format t "p1=~a~%" (p1 (input-lines *aoc-day*)))
   (format t "p2=~a~%" (p2 (input-lines *aoc-day*))))
