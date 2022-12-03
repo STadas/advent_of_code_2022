@@ -1,16 +1,5 @@
 ;; hehe common lisp get it
 
-;; --- docs ---
-; https://github.com/vindarel/cl-str
-; http://www.lispworks.com/documentation/HyperSpec/Front/Contents.htm
-
-;; --- cheatsheet ---
-; (format t "~A~%" (reduce #'+ '(1 2 3 4)))
-; (format t "~A~%" (max-in-list '(1 2 3 4)))
-; (format t "~A~%" (sort '(9 6 3 9 9 9 0 4) '<))
-; (format t "~A~%" (cons '(xd xdd xdddd) '(9 6 3 9 9 9 0 4)))
-; (format t "~A~%" (append '(xd xdd xdddd) '(9 6 3 9 9 9 0 4) '(a s d f)))
-
 ;; --- rc ---
 (if (not (load "~/.sbclrc" :if-does-not-exist nil))
   (format t "Couldn't load .sblcrc"))

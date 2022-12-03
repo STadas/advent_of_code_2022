@@ -28,5 +28,5 @@
                (common-in-group (subseq data idx (+ idx 3)))))))
 
 (defun day-main ()
-  (format t "p1=~A~%" (p1 (input-lines *aoc-day*)))
-  (format t "p2=~A~%" (p2 (input-lines *aoc-day*))))
+  (format t "p1=~a~%" (p1 (input-lines *aoc-day*)))
+  (format t "p2=~a~%" (p2 (input-lines *aoc-day*))))
