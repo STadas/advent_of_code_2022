@@ -1,7 +1,7 @@
 (defun ch-to-prio (ch)
-  (if (upper-case-p ch)
-    (- (char-int ch) 38)
-    (- (char-int ch) 96)))
+  (if (lower-case-p ch)
+    (+ 1 (- (char-int ch) (char-int #\a)))
+    (+ 27 (- (char-int ch) (char-int #\A)))))
 
 (defun seq-mid (seq)
   (ceiling (length seq) 2))
@@ -21,16 +21,11 @@
                         (subseq line (seq-mid line))))))))
 
 (defun p2 (data)
-  (sum (loop for line in data
-             for idx from 0
+  (sum (loop for idx below (length data)
              when (zerop (mod idx 3))
              collect
              (ch-to-prio
-               (common-in-group
-                 (list
-                   (nth idx data)
-                   (nth (+ idx 1) data)
-                   (nth (+ idx 2) data)))))))
+               (common-in-group (subseq data idx (+ idx 3)))))))
 
 (defun day-main ()
   (format t "-------------------------- answers~%")
