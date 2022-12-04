@@ -1,7 +1,8 @@
 (defun ch-to-prio (ch)
-  (if (lower-case-p ch)
-    (+ 1 (- (char-int ch) (char-int #\a)))
-    (+ 27 (- (char-int ch) (char-int #\A)))))
+  (- (char-int ch)
+     (if (lower-case-p ch)
+       (- (char-int #\a) 1)
+       (- (char-int #\A) 27))))
 
 (defun seq-mid (seq)
   (ceiling (length seq) 2))
@@ -13,12 +14,13 @@
   (first (reduce #'common-chars group)))
 
 (defun p1 (data)
-  (sum (loop for line in data
-             collect
-             (ch-to-prio
-               (first (common-chars
-                        (subseq line 0 (seq-mid line))
-                        (subseq line (seq-mid line))))))))
+  (sum (mapcar
+         (lambda (line)
+           (ch-to-prio
+             (first (common-chars
+                      (subseq line 0 (seq-mid line))
+                      (subseq line (seq-mid line))))))
+         data)))
 
 (defun p2 (data)
   (sum (loop for idx below (length data)

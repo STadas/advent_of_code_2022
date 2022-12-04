@@ -1,6 +1,6 @@
 #!/usr/bin/sbcl --script
 
-(format t "-------------------------- loading common~%")
+(format t "------------------------------------ loading common~%")
 (if (not (boundp '*common-loaded*))
   (if (not (load "common.lisp" :if-does-not-exist nil))
     (load "../common.lisp")))
@@ -18,7 +18,7 @@
   (setf *aoc-day* (if (every #'digit-char-p day)
                     (format nil "~2,'0d" (parse-integer day))
                     day))
-  (format t "-------------------------- running ~a~%" *aoc-day*)
+  (format t "------------------------------------ running ~a~%" *aoc-day*)
   (if (load (format nil "~a/solution.lisp" *aoc-day*) :if-does-not-exist nil)
     (time (day-main))
     (format t "Solution for ~a not found~%" *aoc-day*)))
