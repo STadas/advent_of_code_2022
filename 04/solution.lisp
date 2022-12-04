@@ -1,27 +1,23 @@
-(defun range (start end)
-  (loop for i from (parse-integer start) to (parse-integer end)
-        collect i))
+(defun is-subset (r1 r2)
+  (and (>= (nth 0 r1) (nth 0 r2)) (<= (nth 1 r1) (nth 1 r2))))
 
-(defun check-subset (r1 r2)
-  (if (< (length r1) (length r2))
-    (subsetp r1 r2)
-    (subsetp r2 r1)))
+(defun is-overlay (r1 r2)
+  (and (<= (nth 0 r1) (nth 1 r2)) (>= (nth 1 r1) (nth 0 r2))))
 
-(defun check-overlap (r1 r2)
-  (zerop (length (intersection r1 r2))))
+(defun line-to-r (line)
+  (mapcar
+    (lambda (r)
+      (mapcar #'parse-integer (str:split "-" r)))
+    (str:split "," line)))
 
-(defun p1 (data)
-  (length (remove nil (loop for line in data
-        collect (apply #'check-subset (mapcar (lambda (r)
-                          (apply #'range (str:split "-" r)))
-                        (str:split "," line)))))))
-
-(defun p2 (data)
-  (length (remove t (loop for line in data
-        collect (apply #'check-overlap (mapcar (lambda (r)
-                          (apply #'range (str:split "-" r)))
-                        (str:split "," line)))))))
+(defun xd (data p)
+  (length
+    (remove nil
+            (mapcar (lambda (line)
+                      (or (apply p (line-to-r line))
+                          (apply p (reverse (line-to-r line)))))
+                    data))))
 
 (defun day-main ()
-  (format t "p1=~a~%" (p1 (input-lines *aoc-day*)))
-  (format t "p2=~a~%" (p2 (input-lines *aoc-day*))))
+  (format t "p1=~a~%" (xd (input-lines *aoc-day*) #'is-subset))
+  (format t "p2=~a~%" (xd (input-lines *aoc-day*) #'is-overlay)))
