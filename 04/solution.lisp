@@ -11,12 +11,11 @@
     (str:split "," line)))
 
 (defun xd (data p)
-  (length
-    (remove nil
-            (mapcar (lambda (line)
-                      (or (apply p (line-to-r line))
-                          (apply p (reverse (line-to-r line)))))
-                    data))))
+  (count t (mapcar
+             (lambda (line)
+               (or (apply p (line-to-r line))
+                   (apply p (reverse (line-to-r line)))))
+             data)))
 
 (defun day-main ()
   (format t "p1=~a~%" (xd (input-lines *aoc-day*) #'is-subset))
