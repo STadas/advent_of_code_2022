@@ -9,6 +9,9 @@
 (ql:quickload :alexandria)
 
 ;; --- funs ---
+(defun v-list (list-of-lists idx)
+  (mapcar (lambda (li) (nth idx li)) list-of-lists))
+
 (defun repeat-to-str (c c-count)
   (format nil "~v@{~a~:*~}" c-count c))
 
