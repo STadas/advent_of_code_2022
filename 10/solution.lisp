@@ -30,7 +30,7 @@
                                  (1- (mod (+ tick (nth 0 state)) 40)))
                              (<= (- (nth 1 state) 1)
                                  (1- (mod (+ tick (nth 0 state)) 40))))
-                      "#" ".")
+                      "#" " ")
                     (if (zerop (mod (+ tick (nth 0 state)) 40))
                       (format nil "~%") "")))))))
 
