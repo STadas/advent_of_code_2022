@@ -24,16 +24,15 @@
 (defun play-round (monkys p1)
   (loop for m in monkys do
         (loop for item in (items m) do
-              (let* ((res (if p1
-                            (floor (/ (do-op item (op m)) 3))
-                            (mod (do-op item (op m))
-                                 (reduce #'* (mapcar #'div monkys)))))
+              (let* ((res (floor (/ (mod (do-op item (op m))
+                                         (reduce #'* (mapcar #'div monkys)))
+                                    (if p1 3 1))))
                      (to-monky (nth (if (zerop (mod res (div m)))
                                       (if-t m) (if-nil m)) monkys)))
                 (setf (items to-monky)
-                      (append (items to-monky) (list (write-to-string res)))))
-              (incf (insp-count m) (length (items m)))
-              (setf (items m) (list)))))
+                      (append (items to-monky) (list (write-to-string res))))))
+        (incf (insp-count m) (length (items m)))
+        (setf (items m) (list))))
 
 (defun xd (data p1)
   (let* ((monkys (loop for mnky in (line-batches data 2) collect
